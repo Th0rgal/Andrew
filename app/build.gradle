@@ -8,9 +8,6 @@ repositories {
 
 android {
     compileSdkVersion 28
-    dataBinding {
-        enabled = true
-    }
     defaultConfig {
         vectorDrawables.useSupportLibrary = true
         applicationId "io.th0rgal.andrew"

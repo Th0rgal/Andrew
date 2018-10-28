@@ -4,8 +4,24 @@ import android.content.res.AssetManager;
 
 public class Utils {
 
-    public static String dataDirectory;
+    private static String dataDirectory;
 
-    public static AssetManager assetManager;
+    private static AssetManager assetManager;
+
+    public static String getDataDirectory(){
+        return Utils.dataDirectory;
+    }
+
+    public static void setDataDirectory(String dataDirectory){
+        Utils.dataDirectory = dataDirectory;
+    }
+
+    public static AssetManager getAssetManager(){
+        return Utils.assetManager;
+    }
+
+    public static void setAssetManager(AssetManager assetManager){
+        Utils.assetManager = assetManager;
+    }
 
 }

@@ -13,12 +13,12 @@ import java.util.List;
 
 public class LayersManager {
 
-    private static File layerAFile = new File(Utils.dataDirectory, "layerA.yml");
+    private static File layerAFile = new File(Utils.getDataDirectory(), "layerA.yml");
 
-    private static File layerBFile = new File(Utils.dataDirectory, "layerB.json");
+    private static File layerBFile = new File(Utils.getDataDirectory(), "layerB.json");
     private static List<String> layerB;
 
-    private static File layerCFile = new File(Utils.dataDirectory, "layerC.yml");
+    private static File layerCFile = new File(Utils.getDataDirectory(), "layerC.yml");
 
     public static File getLayerA() {
         if (!layerAFile.exists())
@@ -39,7 +39,7 @@ public class LayersManager {
         layerB = new ArrayList<>();
         if (!layerBFile.exists())
             try {
-                copyInputStreamToFile(Utils.assetManager.open("layerB.json"), layerBFile);
+                copyInputStreamToFile(Utils.getAssetManager().open("layerB.json"), layerBFile);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -83,7 +83,6 @@ public class LayersManager {
                 if (out != null) {
                     out.close();
                 }
-
                 // If you want to close the "in" InputStream yourself then remove this
                 // from here but ensure that you close it yourself eventually.
                 in.close();
