@@ -11,9 +11,16 @@
     <color name="theirMessagesTextColor">#34495e</color>
 
     <!-- Basic colors -->
+    <color name="invisible">#00000000</color>
     <color name="transparent">#80000000</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
+
+    <!-- Google colors -->
+    <color name="google_blue">#4285F4</color>
+    <color name="google_green">#34A853</color>
+    <color name="google_yellow">#FBBC05</color>
+    <color name="google_red">#EA4335</color>
 
     <!-- Flat ui colors -->
     <color name="turquoise">#1abc9c</color>

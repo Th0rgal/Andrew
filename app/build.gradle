@@ -36,6 +36,8 @@ dependencies {
 
     // For animated GIF support
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.15'
+    // For speech recognition animations (similar to google now) support
+    implementation 'com.github.zagum:SpeechRecognitionView:1.2.2'
     // For FileUtils
     implementation 'commons-io:commons-io:2.6'
 

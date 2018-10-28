@@ -13,6 +13,7 @@ import java.util.List;
 
 public class LayersManager {
 
+
     private static File layerAFile = new File(Utils.getDataDirectory(), "layerA.yml");
 
     private static File layerBFile = new File(Utils.getDataDirectory(), "layerB.json");
