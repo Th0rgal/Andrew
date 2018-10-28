@@ -13,6 +13,7 @@ import io.th0rgal.andrew.utils.ListUtils;
 public class AsyncMessageProcessing extends AsyncTask<String, String, String> {
 
     ChatAdapter chatAdapter;
+    @SuppressLint("StaticFieldLeak")
     RecyclerView recyclerViewMessageList;
     Author author;
     String input;
