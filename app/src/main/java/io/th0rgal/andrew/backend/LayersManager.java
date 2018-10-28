@@ -37,12 +37,12 @@ public class LayersManager {
             return layerB;
 
         layerB = new ArrayList<>();
-        try {
-            copyInputStreamToFile(Utils.assetManager.open("layerB.json"), layerBFile);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        if (!layerBFile.exists())
+            try {
+                copyInputStreamToFile(Utils.assetManager.open("layerB.json"), layerBFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         try {
             JSONArray jsonarray = new JSONArray(IOUtils.toString(new FileReader(layerBFile)));
             for (int i = 0; i < jsonarray.length(); i++)
@@ -72,25 +72,22 @@ public class LayersManager {
             out = new FileOutputStream(file);
             byte[] buf = new byte[1024];
             int len;
-            while((len=in.read(buf))>0){
-                out.write(buf,0,len);
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             // Ensure that the InputStreams are closed even if there's an exception.
             try {
-                if ( out != null ) {
+                if (out != null) {
                     out.close();
                 }
 
                 // If you want to close the "in" InputStream yourself then remove this
                 // from here but ensure that you close it yourself eventually.
                 in.close();
-            }
-            catch ( IOException e ) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
