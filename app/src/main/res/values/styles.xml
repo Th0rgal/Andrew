@@ -1,0 +1,38 @@
+<resources>
+
+    <style name="Home" parent="Theme.AppCompat.Light">
+
+        <!-- Action bar -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+
+        <!-- Status bar -->
+        <item name="android:windowTranslucentStatus">true</item>
+
+        <!-- background -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+
+    </style>
+
+    <style name="Default" parent="Theme.AppCompat.Light">
+
+        <!-- Action bar -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+
+        <!-- Status bar -->
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/white</item>
+
+        <!-- background -->
+        <item name="android:windowBackground">@color/white</item>
+
+    </style>
+    <style name="Home.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="Home.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+</resources>

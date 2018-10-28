@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Andrew</string>
+
+    <string name="hello_message">Salut %username%, comment puis-je t\'aider ?</string>
+
+    <string name="input_placeholder">Envoyer un message</string>
+    <string name="title_activity_message_list">MessageListActivity</string>
+    <string name="fake_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor</string>
+    <string name="description_send_butoon">Send</string>
+
+</resources>
