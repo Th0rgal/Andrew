@@ -1,0 +1,137 @@
+{
+  "input": {
+    "welcome": [
+      "Salut",
+      "Coucou",
+      "Bonjour",
+      "Hey",
+      "Yo",
+      "cc",
+      "bjr"
+    ],
+    "mood": [
+      "Comment ça va ?",
+      "ça va ?",
+      "tu vas bien ?",
+      "vas-tu bien ?",
+      "tu te sens bien ?",
+      "la forme ?",
+      "tu es en forme ?"
+    ],
+    "goodbye": [
+      "Aurevoir",
+      "a+",
+      "++",
+      "J'y vais",
+      "J'y vais a+",
+      "Adieu",
+      "Bye",
+      "Bye bye",
+      "à la prochaine",
+      "à bientôt",
+      "ciao",
+      "tchao"
+    ],
+    "jokes": [
+      "Raconte une blague",
+      "Raconte moi une blague",
+      "blague",
+      "blague stp",
+      "Donne une blague",
+      "Envoie une blague",
+      "Aboule une blague",
+      "Raconte un truc drôle",
+      "Dis un truc drôle",
+      "Raconte une autre blague",
+      "Raconte moi une autre blague",
+      "autre blague",
+      "autre blague encore",
+      "autre blague s'il te plait",
+      "autre blague stp",
+      "Donne une autre blague",
+      "Envoie une autre blague",
+      "Aboule une autre blague",
+      "Raconte un autre truc drôle",
+      "Dis un autre truc drôle"
+    ],
+    "badAssistant": [
+      "Ok Google",
+      "Hey Cortana",
+      "Salut Siri !",
+      "Alexa ",
+      "Olivia "
+    ],
+    "marryMe": [
+      "Veux-tu m’épouser ?",
+      "Epouse moi",
+      "Veux-tu te marier avec moi ?",
+      "Marie toi avec moi ?",
+      "Es-tu marié ?",
+      "Tu es marié ?"
+    ]
+  },
+  "output": {
+    "welcome": [
+      "Salut",
+      "Coucou",
+      "Bonjour",
+      "Hey",
+      "Yo",
+      "cc",
+      "bjr"
+    ],
+    "mood": [
+      "Ca va bien merci !",
+      "Ouais ça va niquel",
+      "Oui je vais bien, et toi ?",
+      "Yep, et toi ?",
+      "Je me sens bien, comme d'hab, et toi ?",
+      "J'ai toujours la forme :yum: Et toi ?",
+      "Ca va pas trop mal, et toi ?"
+    ],
+    "goodbye": [
+      "Aurevoir",
+      "a+",
+      "++",
+      "Adieu",
+      "Bye",
+      "Bye bye",
+      "à la prochaine",
+      "à bientôt",
+      "ciao",
+      "tchao"
+    ],
+    "jokes": [
+      "Qu'est-ce qu'un mouton sans pattes ? Un nuage !",
+      "Pourquoi les plongeurs plongent-ils en arrière ? Parce que sinon ils tomberaient dans le bateau.",
+      "Qu'est-ce qu'un dromadaire ? Un chameau qui bosse à mi-temps !",
+      "Quelle heure est-il lorsqu’un éléphant s’assied sur une clôture ? L’heure de la changer !",
+      "Une jeune fille se plaint à son amie : - À tous nos rendez-vous, il m'offre des fleurs fanées. - Eh bien, essaye d'arriver à l'heure...",
+      "Pourquoi le chat n'aime pas l'eau ? Parce que, dans l'eau, minet râle !",
+      "Quel animal a le plus de dents ? La petite souris !",
+      "Un coq rentre au poulailler avec un oeuf d’autruche : \"Mesdames, je ne voudrais pas vous vexer mais regardez ce que produit la concurrence…\"",
+      "Que crie un escargot sur le dos d'une tortue ? Youhooooooouuuuuuu !",
+      "Un 0 rencontre un 8 : \"Eh ! Elle est chouette ta ceinture !\"",
+      "Quelle est la puissance d´un coton-tige ? 2 ouates",
+      "Qu'est-ce qui peut être servi mais jamais mangé ? Une balle de tennis.",
+      "2 geeks discutent le 2 janvier : \"Quelle est ta résolution cette année ?\" \"1280 x 768\".",
+      "Deux poissons croisent une étoile de mer :  \"Attention, voilà le shérif !\"",
+      "Que s'est-il passé en 1 111 ? L'invasion des Uns !",
+      "En voici une : Avec quoi ramasse-t-on la papaye ? Avec une foufourche.",
+      "Que fait un geek quand rien ne va plus ? Il se console !",
+      "\"Pourvu qu'il fasse beau\", dit une maman kangourou, \"je n’aime pas laisser les enfants jouer à l'intérieur.\"",
+      "Quel est le numéro de téléphone de la poule ? \"4 4 4 7 1 9 !\"",
+      "Quel est le comble pour un Geek ? Etre privé de sortie...",
+      "Quel est l'animal qui n'a jamais soif ? Le zébu, car quand zébu z'ai plus soif !",
+      "Quel animal a trois bosses ? Un chameau qui s'est cogné."
+    ],
+    "badAssistant": [
+      "Eh ... je suis Andrew !",
+      "Bah non je suis Andrew, enfin je crois :thinking:",
+      "Vous vous êtes TRUMPé d'assistant :wink: "
+    ],
+    "marryMe": [
+      "Pour cela il faudrait que je développe mon côté humain, et vous votre côté numérique."
+    ]
+  }
+}

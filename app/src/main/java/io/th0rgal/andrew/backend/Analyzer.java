@@ -16,7 +16,7 @@ public class Analyzer {
 
         for (int i = 0; i < messagesList.size(); i++)
             for (String line : messagesList.get(i).split("\n"))
-                if (areSimilar(message, line))
+                if (areSimilar(message.toLowerCase(), line.toLowerCase()))
                     possibleAnswers.add(messagesList.get(i + 1));
 
         return (possibleAnswers.size() == 0)

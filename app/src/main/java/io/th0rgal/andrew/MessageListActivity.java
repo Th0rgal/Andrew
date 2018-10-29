@@ -32,6 +32,22 @@ public class MessageListActivity extends AppCompatActivity {
         recyclerViewMessageList.setLayoutManager(new LinearLayoutManager(this));
         chatAdapter = new ChatAdapter();
         recyclerViewMessageList.setAdapter(chatAdapter);
+    }
+
+
+    private void sendMessage(String input) {
+        msgInputText.setText("");
+
+        //my message
+        ChatManager.addMessage(new Message(input, null));
+        chatAdapter.notifyDataSetChanged();
+
+        //answer
+        Author andrew = new Author("Andrew", ContextCompat.getDrawable(this, R.drawable.andrew_avatar));
+        new AsyncMessageProcessing(recyclerViewMessageList, chatAdapter, andrew, input).execute();
+
+        //so that the last message appears above the keyboard and not below
+        recyclerViewMessageList.scrollToPosition(ChatManager.getMessages().size() - 1);
 
     }
 

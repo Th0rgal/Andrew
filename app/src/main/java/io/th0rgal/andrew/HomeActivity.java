@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GestureDetectorCompat;
@@ -16,19 +17,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.github.zagum.speechrecognitionview.RecognitionProgressView;
 import com.github.zagum.speechrecognitionview.adapters.RecognitionListenerAdapter;
+import io.th0rgal.andrew.backend.AsyncMessageProcessing;
+import io.th0rgal.andrew.chat.Author;
+import io.th0rgal.andrew.chat.ChatManager;
+import io.th0rgal.andrew.chat.Message;
 import io.th0rgal.andrew.utils.GestureListener;
 import io.th0rgal.andrew.utils.GestureType;
 import io.th0rgal.andrew.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
 
 
     // This is the gesture detector compat instance.
     private GestureDetectorCompat gestureDetectorCompat = null;
     private SpeechRecognizer speechRecognizer;
-    RecognitionProgressView recognitionProgressView;
+    private RecognitionProgressView recognitionProgressView;
+    private TextToSpeech vocalSynthesizer;
 
 
     @Override
@@ -50,8 +58,8 @@ public class HomeActivity extends AppCompatActivity {
         gestureDetectorCompat = new GestureDetectorCompat(this, gestureListener);
         // Setup the speech recognizer
         setupSpeechRecognizer();
-
-
+        //setup the vocal synthesizer
+        vocalSynthesizer = new TextToSpeech(this, this);
     }
 
 
@@ -76,8 +84,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void onListenButtonClicked(View view) {
-        Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
-
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.RECORD_AUDIO)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -101,7 +107,7 @@ public class HomeActivity extends AppCompatActivity {
         // Return true to tell android OS that event has been consumed, do not pass it to other event listeners.
         return true;
     }
-    
+
     public void setupSpeechRecognizer() {
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         recognitionProgressView = findViewById(R.id.recognition_view);
@@ -114,15 +120,15 @@ public class HomeActivity extends AppCompatActivity {
         });
         recognitionProgressView.setColors(new int[]{
                 ContextCompat.getColor(this, R.color.google_blue),
-                ContextCompat.getColor(this, R.color.google_green),
-                ContextCompat.getColor(this, R.color.google_yellow),
                 ContextCompat.getColor(this, R.color.google_red),
-                ContextCompat.getColor(this, R.color.clouds)
+                ContextCompat.getColor(this, R.color.google_yellow),
+                ContextCompat.getColor(this, R.color.google_blue),
+                ContextCompat.getColor(this, R.color.google_green)
         });
         recognitionProgressView.setBarMaxHeightsInDp(new int[]{100, 120, 90, 115, 80});
-        recognitionProgressView.setCircleRadiusInDp(10);
-        recognitionProgressView.setSpacingInDp(10);
-        recognitionProgressView.setIdleStateAmplitudeInDp(2);
+        recognitionProgressView.setCircleRadiusInDp(8);
+        recognitionProgressView.setSpacingInDp(20);
+        recognitionProgressView.setIdleStateAmplitudeInDp(0);
         recognitionProgressView.setRotationRadiusInDp(50);
         recognitionProgressView.play();
     }
@@ -151,9 +157,15 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void showResults(Bundle results) {
+
         ArrayList<String> matches = results
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-        Toast.makeText(this, matches.get(0), Toast.LENGTH_LONG).show();
+
+        String input = matches.get(0);
+        ChatManager.addMessage(new Message(input, null));
+        Author andrew = new Author("Andrew", ContextCompat.getDrawable(this, R.drawable.andrew_avatar));
+        new AsyncMessageProcessing(vocalSynthesizer, andrew, input).execute();
+
     }
 
     private void requestPermission() {
@@ -168,4 +180,9 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onInit(int status) {
+        if (status != TextToSpeech.ERROR)
+            vocalSynthesizer.setLanguage(Locale.getDefault());
+    }
 }
