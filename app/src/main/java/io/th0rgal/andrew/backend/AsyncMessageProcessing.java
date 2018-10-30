@@ -45,7 +45,7 @@ public class AsyncMessageProcessing extends AsyncTask<String, String, String> {
         if (outputA != null)
             return outputA;
 
-        outputB = LayersManager.submitToLayerB(input);
+        outputB = LayersManager.submitToLayerC(input);
         if (outputB != null)
             return outputB;
 
@@ -62,7 +62,7 @@ public class AsyncMessageProcessing extends AsyncTask<String, String, String> {
     }
 
     private String generateFallBackAnswer() {
-        return ListUtils.random(LayersManager.getLayerB());
+        return ListUtils.random(LayersManager.getLayerC());
     }
 
     @Override
