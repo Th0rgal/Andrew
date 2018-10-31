@@ -19,6 +19,9 @@ public class LayersManager {
     private static File layerAFile = new File(Utils.getDataDirectory(), "layerA.json");
     private static JSONObject layerA;
 
+    private static File layerBFile = new File(Utils.getDataDirectory(), "layerB.json");
+    private static JSONObject layerB;
+
     private static File layerCFile = new File(Utils.getDataDirectory(), "layerC.json");
     private static List<String> layerC;
 
@@ -38,6 +41,24 @@ public class LayersManager {
             }
         }
         return layerA;
+    }
+
+    public static JSONObject getLayerB() {
+
+        if (layerB == null) {
+            if (!layerBFile.exists())
+                try {
+                    copyInputStreamToFile(Utils.getAssetManager().open("layerB.json"), layerBFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            try {
+                layerB = new JSONObject(IOUtils.toString(new FileReader(layerBFile)));
+            } catch (JSONException | IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return layerB;
     }
 
     public static List<String> getLayerC() {
@@ -62,10 +83,9 @@ public class LayersManager {
         return layerC;
     }
 
-
-    public static String submitToLayerA(String input) throws JSONException {
+    public static String submitToFeatures(String input) throws JSONException {
         if (layerA == null)
-            layerA = getLayerA();
+            getLayerA();
 
         //We iterate the input from layerC
         for (Iterator<String> it = layerA.getJSONObject("input").keys(); it.hasNext(); ) {
@@ -84,6 +104,59 @@ public class LayersManager {
                 return ListUtils.random(outputList);
             }
         }
+        return null;
+    }
+
+    public static String submitToLayerA(String input) throws JSONException {
+        if (layerA == null)
+            getLayerA();
+
+        //We iterate the input from layerC
+        for (Iterator<String> it = layerA.getJSONObject("input").keys(); it.hasNext(); ) {
+            String sectionName = it.next();
+            JSONArray section = layerA.getJSONObject("input").getJSONArray(sectionName);
+            List<String> sentences = new ArrayList<>();
+            for (int sentenceIndex = 0; sentenceIndex < section.length(); sentenceIndex++)
+                sentences.add(section.getString(sentenceIndex));
+
+            if (Analyzer.searchForSimilar(input, sentences) != null) {
+                //we get the output section corresponding to the input one
+                JSONArray outputArray = layerA.getJSONObject("output").getJSONArray(sectionName);
+                List<String> outputList = new ArrayList<>();
+                for (int outputArrayIndex = 0; outputArrayIndex < outputArray.length(); outputArrayIndex++)
+                    outputList.add(outputArray.getString(outputArrayIndex));
+                return ListUtils.random(outputList);
+            }
+        }
+        return null;
+    }
+
+    public static String submitToLayerB(String input) throws JSONException {
+        if (layerB == null)
+            getLayerB();
+        //We iterate the input from layerB
+        for (Iterator<String> it = layerB.keys(); it.hasNext(); ) {
+            String sectionName = it.next();
+            if (Analyzer.areSimilar(sectionName.toLowerCase(), input))
+                return layerB.getString(sectionName);
+        }
+        return null;
+    }
+
+    public static String learnToLayerB(String output) throws JSONException {
+
+        String input = ContextManager.get().getContextMessage();
+
+        //We iterate the input from layerB
+        layerB.put(input, output);
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(layerBFile));
+            writer.write(layerB.toString());
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 

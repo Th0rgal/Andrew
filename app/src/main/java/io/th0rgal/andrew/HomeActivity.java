@@ -44,8 +44,8 @@ public class HomeActivity extends AppCompatActivity implements TextToSpeech.OnIn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
         //Initialization of Utils
+        Utils.setResources(getResources());
         Utils.setDataDirectory(getApplicationInfo().dataDir);
         Utils.setAssetManager(getAssets());
 

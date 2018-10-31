@@ -4,11 +4,12 @@ import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.widget.RecyclerView;
+import io.th0rgal.andrew.R;
 import io.th0rgal.andrew.chat.Author;
 import io.th0rgal.andrew.chat.ChatAdapter;
 import io.th0rgal.andrew.chat.ChatManager;
 import io.th0rgal.andrew.chat.Message;
-import io.th0rgal.andrew.utils.ListUtils;
+import io.th0rgal.andrew.utils.Utils;
 import org.json.JSONException;
 
 
@@ -41,19 +42,29 @@ public class AsyncMessageProcessing extends AsyncTask<String, String, String> {
 
     private String generateAnswer() throws JSONException {
 
-        outputA = LayersManager.submitToLayerA(input);
-        if (outputA != null)
-            return outputA;
+        if (ContextManager.get().getCurrentContext() == ContextManager.Context.DEFAULT) {
 
-        outputB = LayersManager.submitToLayerC(input);
-        if (outputB != null)
-            return outputB;
+            outputA = LayersManager.submitToLayerA(input);
+            if (outputA != null)
+                return outputA;
 
-        outputC = null;
-        if (outputC != null)
-            return outputC;
+            outputB = LayersManager.submitToLayerB(input);
+            if (outputB != null)
+                return outputB;
 
-        return generateFallBackAnswer();
+            outputC = LayersManager.submitToLayerC(input);
+            if (outputC != null)
+                return outputC;
+
+            ContextManager.get().setContextMessage(input);
+            return notFound();
+
+        } else {
+            ContextManager.get().updateCurrentContext(ContextManager.Context.DEFAULT);
+            LayersManager.learnToLayerB(input);
+            return Utils.getResources().getString(R.string.just_learned);
+        }
+
     }
 
     private String normalizeMessage(String message) {
@@ -61,8 +72,9 @@ public class AsyncMessageProcessing extends AsyncTask<String, String, String> {
                 .replaceAll("( )?andrew", "%user%").trim();
     }
 
-    private String generateFallBackAnswer() {
-        return ListUtils.random(LayersManager.getLayerC());
+    private String notFound() {
+        ContextManager.get().updateCurrentContext(ContextManager.Context.MSG_NOT_FOUND);
+        return Utils.getResources().getString(R.string.not_found);
     }
 
     @Override

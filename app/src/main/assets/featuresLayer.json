@@ -1,0 +1,31 @@
+{
+  "google": [
+    "Cherche sur google %question%",
+    "Regarde sur google %question%"
+  ],
+  "timetable": [
+    "J'ai cours de quoi ?",
+    "J'ai cours de quoi",
+    "On a cours de quoi ?",
+    "On a cours de quoi",
+    "Est-ce que j'ai cours ?",
+    "Est-ce que j'ai cours"
+  ],
+  "calendar": [
+    "Quelle heure est-il ?",
+    "Quelle heure est-il",
+    "Quelle heure sommes-nous ?",
+    "Quelle heure sommes-nous",
+    "Quel jour sommes-nous ?",
+    "Quel jour sommes-nous",
+    "On est le combien ?",
+    "On est le combien",
+    "On est le combien aujourd'hui ?",
+    "On est le combien aujourd'hui",
+    "Donne moi la date"
+  ],
+  "remember": [
+    "Souviens toi de %fact%",
+    "Souviens toi que %fact%"
+  ]
+}

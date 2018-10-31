@@ -7,5 +7,7 @@
     <string name="title_activity_message_list">MessageListActivity</string>
     <string name="fake_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor</string>
     <string name="description_send_butoon">Send</string>
+    <string name="not_found">Je suis désolé mais je ne sais pas quoi dire, qu\'aurais-je du répondre ?</string>
+    <string name="just_learned">Merci, je tâcherai de m\'en souvenir !</string>
 
 </resources>
