@@ -1,7 +1,6 @@
 package io.th0rgal.andrew.backend.features;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class Timetable {
 
@@ -12,10 +11,20 @@ public class Timetable {
     }
 
     public String getActivityAt(Calendar calendar) {
-        Date date = calendar.getTime();
-        System.out.println(date.getDay());
-
-        return "";
+        try {
+            int day = (calendar.get(Calendar.DAY_OF_WEEK) - 2) % 7;
+            System.out.println(calendar.get(Calendar.HOUR_OF_DAY));
+            int activityID = day * 10 + calendar.get(Calendar.HOUR_OF_DAY) - 8;
+            if (activityID >= activities.length) {
+                int semaine = calendar.get(Calendar.WEEK_OF_YEAR) % 2;
+                if (activities[activityID].length > 1)
+                    return activities[activityID][calendar.get(Calendar.WEEK_OF_YEAR) % 2].toString();
+                return activities[activityID][0].toString();
+            }
+            return Cours.PERM.toString();
+        } catch (Exception e) {
+            return Cours.PERM.toString();
+        }
     }
 
 

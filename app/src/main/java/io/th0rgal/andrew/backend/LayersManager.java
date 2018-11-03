@@ -1,5 +1,6 @@
 package io.th0rgal.andrew.backend;
 
+import io.th0rgal.andrew.backend.features.FeaturesManager;
 import io.th0rgal.andrew.utils.ListUtils;
 import io.th0rgal.andrew.utils.Utils;
 import org.apache.commons.io.IOUtils;
@@ -15,6 +16,8 @@ import java.util.List;
 
 public class LayersManager {
 
+    private static File featuresLayerFile = new File(Utils.getDataDirectory(), "featuresLayer.json");
+    private static JSONObject featuresLayer;
 
     private static File layerAFile = new File(Utils.getDataDirectory(), "layerA.json");
     private static JSONObject layerA;
@@ -24,6 +27,24 @@ public class LayersManager {
 
     private static File layerCFile = new File(Utils.getDataDirectory(), "layerC.json");
     private static List<String> layerC;
+
+    public static JSONObject getFeaturesLayer() {
+
+        if (featuresLayer == null) {
+            if (!featuresLayerFile.exists())
+                try {
+                    copyInputStreamToFile(Utils.getAssetManager().open("featuresLayer.json"), featuresLayerFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            try {
+                featuresLayer = new JSONObject(IOUtils.toString(new FileReader(featuresLayerFile)));
+            } catch (JSONException | IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return featuresLayer;
+    }
 
     public static JSONObject getLayerA() {
 
@@ -84,32 +105,21 @@ public class LayersManager {
     }
 
     public static String submitToFeatures(String input) throws JSONException {
-        if (layerA == null)
-            getLayerA();
+        getFeaturesLayer();
 
-        //We iterate the input from layerC
-        for (Iterator<String> it = layerA.getJSONObject("input").keys(); it.hasNext(); ) {
+        //We iterate the input from layerB
+        for (Iterator<String> it = featuresLayer.keys(); it.hasNext(); ) {
             String sectionName = it.next();
-            JSONArray section = layerA.getJSONObject("input").getJSONArray(sectionName);
-            List<String> sentences = new ArrayList<>();
-            for (int sentenceIndex = 0; sentenceIndex < section.length(); sentenceIndex++)
-                sentences.add(section.getString(sentenceIndex));
-
-            if (Analyzer.searchForSimilar(input, sentences) != null) {
-                //we get the output section corresponding to the input one
-                JSONArray outputArray = layerA.getJSONObject("output").getJSONArray(sectionName);
-                List<String> outputList = new ArrayList<>();
-                for (int outputArrayIndex = 0; outputArrayIndex < outputArray.length(); outputArrayIndex++)
-                    outputList.add(outputArray.getString(outputArrayIndex));
-                return ListUtils.random(outputList);
-            }
+            JSONArray sentencesArray = featuresLayer.getJSONArray(sectionName);
+            for (int i = 0; i < sentencesArray.length(); i++)
+                if (Analyzer.areSimilar(sentencesArray.getString(i), input))
+                    return new FeaturesManager(sectionName).delegate();
         }
         return null;
     }
 
     public static String submitToLayerA(String input) throws JSONException {
-        if (layerA == null)
-            getLayerA();
+        getLayerA();
 
         //We iterate the input from layerC
         for (Iterator<String> it = layerA.getJSONObject("input").keys(); it.hasNext(); ) {
@@ -132,8 +142,8 @@ public class LayersManager {
     }
 
     public static String submitToLayerB(String input) throws JSONException {
-        if (layerB == null)
-            getLayerB();
+        getLayerB();
+
         //We iterate the input from layerB
         for (Iterator<String> it = layerB.keys(); it.hasNext(); ) {
             String sectionName = it.next();

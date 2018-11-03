@@ -21,9 +21,6 @@ public class AsyncMessageProcessing extends AsyncTask<String, String, String> {
     TextToSpeech vocalSynthesizer;
     Author author;
     String input;
-    String outputA;
-    String outputB;
-    String outputC;
 
     public AsyncMessageProcessing(RecyclerView recyclerViewMessageList, ChatAdapter chatAdapter, Author author, String message) {
         super();
@@ -44,15 +41,19 @@ public class AsyncMessageProcessing extends AsyncTask<String, String, String> {
 
         if (ContextManager.get().getCurrentContext() == ContextManager.Context.DEFAULT) {
 
-            outputA = LayersManager.submitToLayerA(input);
+            String featuresOutput = LayersManager.submitToFeatures(input);
+            if (featuresOutput != null)
+                return featuresOutput;
+
+            String outputA = LayersManager.submitToLayerA(input);
             if (outputA != null)
                 return outputA;
 
-            outputB = LayersManager.submitToLayerB(input);
+            String outputB = LayersManager.submitToLayerB(input);
             if (outputB != null)
                 return outputB;
 
-            outputC = LayersManager.submitToLayerC(input);
+            String outputC = LayersManager.submitToLayerC(input);
             if (outputC != null)
                 return outputC;
 
