@@ -1,32 +1,58 @@
 package io.th0rgal.andrew.backend.features;
 
-import java.util.Calendar;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 
 public class Timetable {
 
     public String getCurrentActivity() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        return getActivityAt(calendar);
+
+        return getActivityAt(new LocalDate(), new LocalTime());
     }
 
-    public String getActivityAt(Calendar calendar) {
+    public String getActivityAt(LocalDate date, LocalTime time) {
+
         try {
-            int day = (calendar.get(Calendar.DAY_OF_WEEK) - 2) % 7;
-            System.out.println(calendar.get(Calendar.HOUR_OF_DAY));
-            int activityID = day * 10 + calendar.get(Calendar.HOUR_OF_DAY) - 8;
-            if (activityID >= activities.length) {
-                int semaine = calendar.get(Calendar.WEEK_OF_YEAR) % 2;
-                if (activities[activityID].length > 1)
-                    return activities[activityID][calendar.get(Calendar.WEEK_OF_YEAR) % 2].toString();
-                return activities[activityID][0].toString();
-            }
-            return Cours.PERM.toString();
-        } catch (Exception e) {
-            return Cours.PERM.toString();
-        }
-    }
+            int day = date.getDayOfWeek() - 1;
 
+            int activityID = day * 10 - 1 + time.getHourOfDay() - 7;
+
+            if (time.getMinuteOfHour() > 45)
+                activityID++;
+
+            if (activityID < activities.length) {
+                int semaine = date.getWeekOfWeekyear() % 2;
+                Cours cours;
+                int weekType;
+                if (activities[activityID].length > 1)
+                    weekType = date.getWeekOfWeekyear() % 2;
+                else
+                    weekType = 0;
+
+                cours = activities[activityID][weekType];
+
+                if (cours == Cours.PERM) {
+                    int iterator = activityID + 1;
+                    Cours nextCours = activities[iterator][weekType];
+                    while (nextCours != null && nextCours == Cours.PERM) {
+                        iterator++;
+                        nextCours = activities[iterator][weekType];
+                    }
+                    if (nextCours == null) {
+                        return "Eh bien je crois que tu es en weekend !";
+                    } else {
+                        return "Tu n'as pas cours pour l'instant, tu reprendras avec " + nextCours.toString() + " dans " + (iterator - activityID) + "heure(s) !";
+                    }
+                } else {
+                    return "Tu as " + cours;
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Je suis désolé mais je n'arrive pas à lire";
+    }
 
     public enum Cours {
         MATHS("cours de Mathématiques"),
