@@ -14,40 +14,41 @@ public class Timetable {
 
         try {
             int day = date.getDayOfWeek() - 1;
-
-            int activityID = day * 10 - 1 + time.getHourOfDay() - 7;
-
+            int hour = time.getHourOfDay();
             if (time.getMinuteOfHour() > 45)
-                activityID++;
+                hour++;
 
-            if (activityID < activities.length) {
-                int semaine = date.getWeekOfWeekyear() % 2;
-                Cours cours;
-                int weekType;
-                if (activities[activityID].length > 1)
-                    weekType = date.getWeekOfWeekyear() % 2;
-                else
-                    weekType = 0;
+            int activityID = day * 10 - 1 + hour - 7;
 
-                cours = activities[activityID][weekType];
+            if (hour - 7 > 10)
+                return "Tu n'as pas cours espèce de boloss !";
 
-                if (cours == Cours.PERM) {
-                    int iterator = activityID + 1;
-                    Cours nextCours = activities[iterator][weekType];
-                    while (nextCours != null && nextCours == Cours.PERM) {
-                        iterator++;
-                        nextCours = activities[iterator][weekType];
-                    }
-                    if (nextCours == null) {
-                        return "Eh bien je crois que tu es en weekend !";
-                    } else {
-                        return "Tu n'as pas cours pour l'instant, tu reprendras avec " + nextCours.toString() + " dans " + (iterator - activityID) + "heure(s) !";
-                    }
-                } else {
-                    return "Tu as " + cours;
+            Cours cours;
+            int weekType;
+            if (activities[activityID].length > 1)
+                weekType = date.getWeekOfWeekyear() % 2 - 1;
+            else
+                weekType = 0;
+
+            cours = activities[activityID][weekType];
+
+            if (cours == Cours.PERM) {
+                int iterator = activityID + 1;
+                Cours nextCours = activities[iterator][weekType];
+                while (nextCours != null && nextCours == Cours.PERM) {
+                    iterator++;
+                    nextCours = activities[iterator][weekType];
                 }
-
+                if (nextCours == null) {
+                    return "Eh bien je crois que tu es en weekend !";
+                } else {
+                    return "Tu n'as pas cours pour l'instant, tu reprendras avec " + nextCours.toString() + " dans " + (iterator - activityID) + "heure(s) !";
+                }
+            } else {
+                return "Tu as " + cours;
             }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }

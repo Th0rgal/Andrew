@@ -33,7 +33,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
+    
+    implementation group: 'joda-time', name: 'joda-time', version: '2.3'
+    
     // For animated GIF support
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.15'
     // For speech recognition animations (similar to google now) support
